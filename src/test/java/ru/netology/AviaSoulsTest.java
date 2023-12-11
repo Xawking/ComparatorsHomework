@@ -119,4 +119,33 @@ class AviaSoulsTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void shouldNotFindSorted() {
+        Ticket ticket = new Ticket("city", "city2", 1500, 12, 17);
+        Ticket ticket2 = new Ticket("city3", "city4", 1000, 9, 18);
+        Ticket ticket3 = new Ticket("city", "city6", 3000, 2, 20);
+        AviaSouls manager = new AviaSouls();
+        manager.add(ticket);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        Ticket[] expected = {};
+        Ticket[] actual = manager.search("city6", "city7");
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotFindThroughComparator() {
+        Ticket ticket = new Ticket("city", "city2", 1500, 10, 18);
+        Ticket ticket2 = new Ticket("city3", "city4", 1000, 10, 20);
+        Ticket ticket3 = new Ticket("city", "city6", 3000, 10, 17);
+        AviaSouls manager = new AviaSouls();
+        TicketTimeComparator comparator = new TicketTimeComparator();
+        manager.add(ticket);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        Ticket[] expected = {};
+        Ticket[] actual = manager.searchAndSortBy("city6", "city7", comparator);
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
 }
